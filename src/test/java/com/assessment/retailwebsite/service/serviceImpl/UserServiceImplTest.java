@@ -7,9 +7,7 @@ import com.assessment.retailwebsite.payload.request.RegisterUserRequest;
 import com.assessment.retailwebsite.payload.response.RegisteredUserResponse;
 import com.assessment.retailwebsite.repository.RoleRepository;
 import com.assessment.retailwebsite.repository.UserRepository;
-import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -34,14 +32,12 @@ class UserServiceImplTest {
     private UserServiceImpl userService;
 
     private Role affiliate;
-    private Role longTerm;
     private RegisterUserRequest req;
-    private User longTermUser;
+    private User affiliateUser;
 
     @BeforeEach
     void setUp() {
         affiliate = new Role(1l, "Affiliate");
-        longTerm = new Role(2l, "LongTermCustomer");
 
         req = new RegisterUserRequest();
         req.setFirstName("Test");
@@ -50,13 +46,13 @@ class UserServiceImplTest {
         req.setPassword("testing123");
         req.setRole(affiliate.getName());
 
-        longTermUser = new User();
-        longTermUser.setFirstName("Test");
-        longTermUser.setLastName("Case");
-        longTermUser.setEmail("TestCase2@gmail.com");
-        longTermUser.setPassword("testing123");
-        longTermUser.setId(5l);
-        longTermUser.setRole(longTerm);
+        affiliateUser = new User();
+        affiliateUser.setFirstName("Test");
+        affiliateUser.setLastName("Affiliate");
+        affiliateUser.setEmail("TestCase1@gmail.com");
+        affiliateUser.setPassword("testing123");
+        affiliateUser.setId(5l);
+        affiliateUser.setRole(affiliate);
     }
 
     @Test
@@ -71,7 +67,7 @@ class UserServiceImplTest {
 
     @Test
     void userExists() {
-        when(userRepository.findByEmail(req.getEmail())).thenReturn(Optional.of(longTermUser));
+        when(userRepository.findByEmail(req.getEmail())).thenReturn(Optional.of(affiliateUser));
 
         Exception exception = assertThrows(AppEntityException.class, () -> {
             userService.registerUser(req);
