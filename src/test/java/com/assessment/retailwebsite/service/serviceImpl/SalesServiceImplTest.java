@@ -83,7 +83,19 @@ class SalesServiceImplTest {
         when(discountRepository.findByRole(user.getRole())).thenReturn(Optional.of(affiliateDiscount));
         when(productRepository.findById(anyLong())).thenReturn(Optional.of(product));
         var res = salesService.processSales(salesOrder);
-        assertEquals("3847.5", String.valueOf(res.getTotalPrice()));
+
+        BigDecimal totalPrice = BigDecimal.valueOf(4500);
+        BigDecimal discount = BigDecimal.valueOf(10);
+
+        BigDecimal a = totalPrice.multiply(discount);
+        BigDecimal b = a.divide(BigDecimal.valueOf(100));
+        BigDecimal discountPrice = totalPrice.subtract(b);
+
+        BigDecimal c = discountPrice.divide(BigDecimal.valueOf(100));
+        BigDecimal d = c.multiply(BigDecimal.valueOf(5));
+        BigDecimal expectedTotal = discountPrice.subtract(d);
+
+        assertEquals(expectedTotal, res.getTotalPrice());
     }
 
     @Test
@@ -92,7 +104,19 @@ class SalesServiceImplTest {
         when(discountRepository.findByRole(user.getRole())).thenReturn(Optional.of(employeeDiscount));
         when(productRepository.findById(anyLong())).thenReturn(Optional.of(product));
         var res = salesService.processSales(salesOrder);
-        assertEquals("2992.5", String.valueOf(res.getTotalPrice()));
+
+        BigDecimal totalPrice = BigDecimal.valueOf(4500);
+        BigDecimal discount = BigDecimal.valueOf(30);
+
+        BigDecimal a = totalPrice.multiply(discount);
+        BigDecimal b = a.divide(BigDecimal.valueOf(100));
+        BigDecimal discountPrice = totalPrice.subtract(b);
+
+        BigDecimal c = discountPrice.divide(BigDecimal.valueOf(100));
+        BigDecimal d = c.multiply(BigDecimal.valueOf(5));
+        BigDecimal expectedTotal = discountPrice.subtract(d);
+
+        assertEquals(expectedTotal, res.getTotalPrice());
     }
 
     @Test
@@ -101,7 +125,19 @@ class SalesServiceImplTest {
         when(discountRepository.findByRole(user.getRole())).thenReturn(Optional.of(customerDiscount));
         when(productRepository.findById(anyLong())).thenReturn(Optional.of(product));
         var res = salesService.processSales(salesOrder);
-        assertEquals("4275", String.valueOf(res.getTotalPrice()));
+
+        BigDecimal totalPrice = BigDecimal.valueOf(4500);
+        BigDecimal discount = BigDecimal.valueOf(0);
+
+        BigDecimal a = totalPrice.multiply(discount);
+        BigDecimal b = a.divide(BigDecimal.valueOf(100));
+        BigDecimal discountPrice = totalPrice.subtract(b);
+
+        BigDecimal c = discountPrice.divide(BigDecimal.valueOf(100));
+        BigDecimal d = c.multiply(BigDecimal.valueOf(5));
+        BigDecimal expectedTotal = discountPrice.subtract(d);
+
+        assertEquals(expectedTotal, res.getTotalPrice());
     }
 
     @Test
@@ -110,6 +146,18 @@ class SalesServiceImplTest {
         when(discountRepository.findByRole(user.getRole())).thenReturn(Optional.of(longTermDiscount));
         when(productRepository.findById(anyLong())).thenReturn(Optional.of(product));
         var res = salesService.processSales(salesOrder);
-        assertEquals("4061.25", String.valueOf(res.getTotalPrice()));
+
+        BigDecimal totalPrice = BigDecimal.valueOf(4500);
+        BigDecimal discount = BigDecimal.valueOf(5);
+
+        BigDecimal a = totalPrice.multiply(discount);
+        BigDecimal b = a.divide(BigDecimal.valueOf(100));
+        BigDecimal discountPrice = totalPrice.subtract(b);
+
+        BigDecimal c = discountPrice.divide(BigDecimal.valueOf(100));
+        BigDecimal d = c.multiply(BigDecimal.valueOf(5));
+        BigDecimal expectedTotal = discountPrice.subtract(d);
+
+        assertEquals(expectedTotal, res.getTotalPrice());
     }
 }
