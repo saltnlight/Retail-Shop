@@ -22,7 +22,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-@Slf4j
 class UserServiceImplTest {
 
     @Mock
@@ -38,7 +37,6 @@ class UserServiceImplTest {
     private Role longTerm;
     private RegisterUserRequest req;
     private User longTermUser;
-    private User affiliateUser = new User();
 
     @BeforeEach
     void setUp() {
